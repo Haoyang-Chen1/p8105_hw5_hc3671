@@ -1,0 +1,98 @@
+---
+title: "p8105_hw5_hc3671"
+author: "Barry"
+date: "2025-11-01"
+output: html_document
+---
+```{r}
+library(dplyr)
+library(tidyverse)
+set.seed(0416)
+```
+
+# Problem one
+```{r}
+birthday_check = function(size){
+  sample = sample(1:365, size, replace = TRUE)
+  result = n_distinct(sample) < size
+  result
+}
+birthday_simulation = 
+  expand.grid(
+    size = 2:50,
+    iter = 1:10000
+  ) |> 
+  mutate(
+    simulation = map(size, birthday_check)
+  ) |> 
+  unnest(cols = simulation) |> 
+  group_by(size) |> 
+  summarise(
+    simulation_result = mean(simulation)
+  )
+list_norms = 
+  list(
+    a = rnorm(20, 3, 1),
+    b = rnorm(20, 0, 5),
+    c = rnorm(20, 10, .2),
+    d = rnorm(20, -3, 1)
+  )
+
+```
+
+## Question2
+
+```{r}
+n = 30
+sigma = 5
+mu = 0
+iter = 5000
+```
+
+```{r}
+mu_simul = function(mu = 0){
+  x = rnorm(n, mean = mu, sd = sigma)
+  result = t.test(x, mu = 0)
+  tibble(
+    mu = mu,
+    broom::tidy(result)[1:3]
+  )
+}
+
+simulation = 
+  
+
+```
+
+
+```{r}
+sim_mean_sd = function(n, mu = 2, sigma = 3) {
+  
+  sim_data = tibble(
+    x = rnorm(n, mean = mu, sd = sigma),
+  )
+  
+  sim_data |> 
+    summarize(
+      mu_hat = mean(x),
+      sigma_hat = sd(x)
+    )
+}
+output = vector("list", 100)
+
+for (i in 1:100) {
+  output[[i]] = sim_mean_sd(30)
+}
+
+sim_results = bind_rows(output)
+
+
+x <- list(
+  a = 1:4,
+  b = c("x", "y", "z")
+)
+```
+
+
+
+
