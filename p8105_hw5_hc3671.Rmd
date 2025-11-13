@@ -4,14 +4,23 @@ author: "Barry"
 date: "2025-11-01"
 output: github_document
 ---
+
 ```{r}
 library(dplyr)
 library(tidyverse)
 library(ggplot2)
 set.seed(0416)
+knitr::opts_chunk$set(
+  fig.path   = "plots/",   
+  fig.width  = 12, fig.height = 8,
+  dpi        = 320,
+  fig.retina = 2,            
+  dev        = "png"       
+)
 ```
 
 # Problem one
+
 ```{r}
 birthday_check = function(size){
   sample = sample(1:365, size, replace = TRUE)
@@ -44,6 +53,7 @@ birthday_plot =
   theme_minimal()
 birthday_plot
 ```
+
 When the group size reaches around 23, the probability of at least two people share the same birthday is already 50% and keeps going up when adding the group size.when the group size is over 45, the possibility is pretty big that almost reach 1.
 
 ## Question2
@@ -89,7 +99,7 @@ simulation_unnest =
 ```
 
 Make the plots:
- 
+
 ```{r}
 plot1 =
 simulation_unnest |> 
@@ -140,7 +150,6 @@ plot2
 
 The sample average of $\hat{\mu}$ across tests for which the null is rejected is approximately equal to the true value of $\mu$. between both conditions, the sample mean should be the most precise prediction since it is unbiased. When using the sample average of $\hat{\mu}$ across tests for which the null is rejected, the result will be higher than the true value $\mu$, because it rule out the small values. But when $\mu$ gets high the power becomes larger, it is more difficult to accept null hypothesis, and the sample average of $\hat{\mu}$ across tests for which the null is rejected will be closer to the true value, which obeys the plot.
 
-
 ## Problem 3
 
 ```{r}
@@ -178,8 +187,7 @@ homi_count |>
   unnest(prop_tidy)
 ```
 
-```{r}
-
+```{r, warning=FALSE, message=FALSE}
 test_all = 
   homi_count |> 
   mutate(
@@ -190,12 +198,12 @@ test_all =
   ) |> 
   select(-prop) |> 
   unnest(prop_tidy) |>
-  select(city_state, number_unsolved_homicides, number_homicides, estimate,                  p.value, conf.low, conf.high)
+  select(city_state, number_unsolved_homicides, number_homicides, estimate, p.value, conf.low, conf.high)
 
 ```
 
 Make a plot:
- 
+
 ```{r}
 city_homi_plot =
   test_all |>
@@ -217,5 +225,3 @@ city_homi_plot =
 city_homi_plot
 
 ```
-
-
